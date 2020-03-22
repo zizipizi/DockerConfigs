@@ -1,0 +1,21 @@
+version: '3'
+services:
+  elasticsearch:
+    image: "elasticsearch:7.6.0"
+    container_name: "elastic"
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    environment:
+      - discovery.type=single-node
+
+  elastichq:
+    image: elastichq/elasticsearch-hq:latest
+    container_name: elastichq
+    environment:
+      - HQ_DEFAULT_URL=http://elasticsearch:9200
+      - HQ_DEBUG=True
+      - HQ_ENABLE_SSL=False
+      - HQ_VERIFY_CERTS=False
+    ports:
+      - 5000:5000
